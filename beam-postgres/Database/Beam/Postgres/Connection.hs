@@ -229,7 +229,7 @@ withPgDebug dbg conn (Pg action) =
            case sts of
              Pg.TuplesOk -> do
                let Pg process = mkProcess (Pg (liftF (PgFetchNext id)))
-               runF process (\x _ -> Pg.unsafeFreeResult res >> next x) (stepReturningList res) 0
+               runF process (\x _ -> next x) (stepReturningList res) 0
              _ -> Pg.throwResultError errMsg res sts
 
       stepReturningNone :: forall a. PgF (IO (Either BeamRowReadError a)) -> IO (Either BeamRowReadError a)
